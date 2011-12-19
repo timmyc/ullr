@@ -87,12 +87,12 @@ module Ullr
 
       def snow_estimate
         rng = ['0','0']
-        range = self.value.scan(/New snow accumulation of ([0-9]|[0-9][0-9]) to ([0-9]|[0-9][0-9]) inches possible/)
+        range = self.value.scan(/New snow accumulation of (0|[1-9]\d*) to (0|[1-9]\d*)/)
         one = self.value.scan(/around an inch possible/)
         if !one.empty?
           rng = ['0','1']
         elsif !range.empty?
-          rng = range
+          rng = range.first
         elsif self.has_snow?
           rng = ['0','1']
         end
@@ -114,7 +114,7 @@ module Ullr
       include HappyMapper
       tag 'parameters'
       has_many :temperatures, Temperature
-      has_many :pops, POP
+      has_one :pops, POP
       has_one :weather, Weather
       has_one :conditions_icon, ConditionsIcon
       has_one :worded_forecast, WordedForecast

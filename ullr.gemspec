@@ -11,14 +11,14 @@ Gem::Specification.new do |s|
   s.email = %q{timmydcrawford@gmail.com}
   s.executables = [%q{ullr}]
   s.extra_rdoc_files = [%q{History.txt}, %q{bin/ullr}]
-  s.files = [%q{.bnsignore}, %q{History.txt}, %q{README.md}, %q{Rakefile}, %q{bin/ullr}, %q{lib/ullr.rb}, %q{spec/spec_helper.rb}, %q{spec/ullr_spec.rb}, %q{test/test_ullr.rb}, %q{version.txt}]
+  s.files = [%q{.bnsignore}, %q{History.txt}, %q{README.md}, %q{Rakefile}, %q{bin/ullr}, %q{lib/ullr.rb}, %q{spec/spec_helper.rb}, %q{spec/ullr_spec.rb}, %q{version.txt}]
   s.homepage = %q{https://github.com/timmyc/ullr}
   s.rdoc_options = [%q{--main}, %q{README.md}]
   s.require_paths = [%q{lib}]
   s.rubyforge_project = %q{ullr}
   s.rubygems_version = %q{1.8.6}
   s.summary = %q{ullr is a little gem that consumes NOAA weather xml for a given lat/long, and returns a ruby object with 12 hour forecasts along with some sugar to let you know if any sugar will be falling from the sky.}
-  s.test_files = [%q{test/test_ullr.rb}]
+  s.test_files = [%q{spec/ullr_spec.rb}]
   s.add_dependency(%q<happymapper>, [">=0.4.0"])
 
   if s.respond_to? :specification_version then

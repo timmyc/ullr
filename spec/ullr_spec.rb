@@ -39,6 +39,117 @@ describe Ullr do
             @parameters.instance_of?(Ullr::NOAA::Parameters).should be_true
           end
 
+          context 'Worded Forecast' do
+            before do
+              @worded_forecast = @parameters.worded_forecast
+            end
+            
+            it "should have one worded_forecast" do
+              @worded_forecast.instance_of?(Ullr::NOAA::WordedForecast).should be_true
+            end
+
+            it "should have a time-layout" do
+              @worded_forecast.time_layout.should eql('k-p12h-n13-1')
+            end
+
+            it "should have a data_source" do
+              @worded_forecast.dataSource.should eql('pdtNetcdf')
+            end
+
+            it "should have a wordGenerator" do
+              @worded_forecast.wordGenerator.should eql('markMitchell')
+            end
+
+            context 'Text' do
+              before do
+                @text = @worded_forecast.texts.first
+              end
+
+              it "should have many icon_links" do
+                @worded_forecast.texts.instance_of?(Array).should be_true
+              end
+
+              it "should have a value" do
+                @text.value.should eql('A 20 percent chance of snow.  Partly sunny, with a high near 39. West wind around 9 mph. ')
+              end
+
+              it "should respond to has_snow?" do
+                @text.respond_to?(:has_snow?).should be_true
+              end
+
+              it "should return true to has_snow? if snow exists" do
+                @text.has_snow?.should be_true
+              end
+
+              it "should return false to has_snow? if no snow exists" do
+                @text.value = "foo"
+                @text.has_snow?.should be_false
+              end
+
+              it "should respond to snow_estimate" do
+                @text.respond_to?(:snow_estimate).should be_true
+              end
+
+              it "should return [0,1] as the estimate when snow exists but no estimate given" do
+                @text.snow_estimate.should eql(['0','1'])
+              end
+
+              it "should return zeros when no snow exists" do
+                @text.value = "foo"
+                @text.snow_estimate.should eql(['0','0'])
+              end
+
+              it "should return the proper snow estimate when range is given" do
+                @text.value = "blah blah blah. New snow accumulation of 6 to 8"
+                @text.snow_estimate.should eql(['6','8'])
+              end
+
+              it "should support sickter double digit days" do
+                @text.value = "blah blah blah. New snow accumulation of 16 to 18"
+                @text.snow_estimate.should eql(['16','18'])
+              end
+
+              it "should support less than an inch" do
+                @text.value = "blah blah blah around an inch possible"
+                @text.snow_estimate.should eql(['0','1'])
+              end
+            end
+
+          end
+          
+          context 'Icons' do
+            before do
+              @icons = @parameters.conditions_icon
+            end
+            
+            it "should have one weather" do
+              @icons.instance_of?(Ullr::NOAA::ConditionsIcon).should be_true
+            end
+
+            it "should have a time-layout" do
+              @icons.time_layout.should eql('k-p12h-n13-1')
+            end
+
+            it "should have a name" do
+              @icons.name.should eql('Conditions Icon')
+            end
+
+            context 'Icon Links' do
+              before do
+                @icon_link = @icons.icon_links.first
+              end
+
+              it "should have many icon_links" do
+                @icons.icon_links.instance_of?(Array).should be_true
+              end
+
+              it "should have a url" do
+                @icon_link.url.should eql("http://forecast.weather.gov/images/wtf/sn20.jpg")
+              end
+            end
+
+          end
+
           context 'Weather' do
             before do
               @weather = @parameters.weather
@@ -56,16 +167,30 @@ describe Ullr do
               @weather.name.should eql('Weather Type, Coverage, Intensity')
             end
 
+            context 'Weather Conditions' do
+              before do
+                @weather_conditions = @weather.weather_conditions.first
+              end
+
+              it "should have many weather_conditions" do
+                @weather.weather_conditions.instance_of?(Array).should be_true
+              end
+
+              it "should have a weather_summary" do
+                @weather_conditions.weather_summary.should eql("Slight Chc Snow")
+              end
+            end
+
           end
 
           context 'Probability of Precipitation' do
-            it "should have many pops" do
-              @parameters.pops.instance_of?(Array).should be_true
+            it "should have one pops" do
+              @parameters.pops.instance_of?(Ullr::NOAA::POP).should be_true
             end
 
             context 'instance of' do
               before do
-                @pop = @parameters.pops.first
+                @pop = @parameters.pops
               end
 
               it "should have a type" do
