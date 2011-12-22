@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = %q{timmydcrawford@gmail.com}
   s.executables = [%q{ullr}]
   s.extra_rdoc_files = [%q{History.txt}, %q{bin/ullr}]
-  s.files = [%q{.bnsignore}, %q{History.txt}, %q{README.md}, %q{Rakefile}, %q{bin/ullr}, %q{lib/ullr.rb}, %q{lib/ullr/*.rb}, %q{spec/spec_helper.rb}, %q{spec/ullr_spec.rb}, %q{version.txt}]
+  s.files = [%q{.bnsignore}, %q{History.txt}, %q{README.md}, %q{Rakefile}, %q{bin/ullr}, %q{lib/ullr.rb}, %q{lib/ullr/noaa.rb}, %q{lib/ullr/forecast.rb}, %q{spec/spec_helper.rb}, %q{spec/ullr_spec.rb}, %q{version.txt}]
   s.homepage = %q{https://github.com/timmyc/ullr}
   s.rdoc_options = [%q{--main}, %q{README.md}]
   s.require_paths = [%q{lib}]
