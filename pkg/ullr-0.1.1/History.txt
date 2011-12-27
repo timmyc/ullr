@@ -5,3 +5,8 @@
 == 0.1.1 / 2011-12-21
 
 * gemspec updates
+
+== 0.1.2 / 2011-12-27
+
+* fix typo in readme
+* fix bug for daytime snow accumulation estimates

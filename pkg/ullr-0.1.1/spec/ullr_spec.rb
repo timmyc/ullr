@@ -104,6 +104,11 @@ describe Ullr do
                 @text.snow_estimate.should eql(['6','8'])
               end
 
+              it "should return proper snow estimate when range daytime is given" do
+                @text.value = "Total daytime snow accumulation of 1 to 3 inches possible."
+                @text.snow_estimate.should eql(['1','3'])
+              end
+
               it "should support sickter double digit days" do
                 @text.value = "blah blah blah. New snow accumulation of 16 to 18"
                 @text.snow_estimate.should eql(['16','18'])

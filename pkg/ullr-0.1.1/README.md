@@ -13,7 +13,7 @@ Examples
 --------
 
 * iheartsnow = Ullr::Forecast.new(:lat => 43.98, :lon => -121.68)
-* iheartsnow.get_nooa_forecast
+* iheartsnow.get_noaa_forecast
 
 Run Tests
 ---------

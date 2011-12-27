@@ -87,7 +87,7 @@ module Ullr
 
       def snow_estimate
         rng = ['0','0']
-        range = self.value.scan(/New snow accumulation of (0|[1-9]\d*) to (0|[1-9]\d*)/)
+        range = self.value.scan(/snow accumulation of (0|[1-9]\d*) to (0|[1-9]\d*)/)
         one = self.value.scan(/around an inch possible/)
         if !one.empty?
           rng = ['0','1']
