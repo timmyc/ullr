@@ -10,3 +10,7 @@
 
 * fix typo in readme
 * fix bug for daytime snow accumulation estimates
+
+== 0.1.2 / 2011-12-28
+
+* now uses proper min/max values from feed instead of regex matches in forecast text

@@ -474,6 +474,61 @@ describe Ullr do
         @forecast.get_noaa_forecast
         @forecast.socket_error.should be_true
       end
+
+      it "should store parsed forecast" do
+        @forecast.should_receive(:open).with(@forecast.noaa_endpoint).and_return(@noaa_fixture)
+        @forecast.get_noaa_forecast
+        @forecast.should respond_to(:parsed_forecast)
+        @forecast.parsed_forecast.should be_an_instance_of(Ullr::NOAA::Data)
+      end
+
+      it "should call parse_temps" do
+        @forecast.should_receive(:open).with(@forecast.noaa_endpoint).and_return(@noaa_fixture)
+        @forecast.should_receive(:parse_temps)
+        @forecast.get_noaa_forecast
+      end
+
+      context 'parse_temps' do
+        before do
+          @forecast.should_receive(:open).with(@forecast.noaa_endpoint).and_return(@noaa_fixture)
+          @forecast.get_noaa_forecast
+        end
+
+        it "should respond to parse_temps" do
+          @forecast.should respond_to(:parse_temps)
+        end
+
+        it "should return a hash" do
+          @forecast.parse_temps.should be_an_instance_of(Hash)
+        end
+
+        context 'min max values' do
+          before do
+            @temps = @forecast.parse_temps
+          end
+          it "should have an array of min temps" do
+            @temps[:minimum].should be_an_instance_of(Array)
+          end
+
+          it "should have an array of max temps" do
+            @temps[:maximum].should be_an_instance_of(Array)
+          end
+
+          it "should decoreate an object with correct min temp data" do
+            @min = @temps[:minimum].first
+            @min.temperature.should eql('25')
+            @min.start_time.should eql(DateTime.parse('2011-12-18T18:00:00-08:00'))
+            @min.period_name.should eql('Tonight')
+          end
+
+          it "should decoreate an object with correct max temp data" do
+            @max = @temps[:maximum].first
+            @max.temperature.should eql('39')
+            @max.start_time.should eql(DateTime.parse('2011-12-18T12:00:00-08:00'))
+            @max.period_name.should eql('This Afternoon')
+          end
+        end
+      end
     end
 
   end
