@@ -6,7 +6,11 @@ module Ullr
       tag 'start-valid-time'
       content :period_start
       attribute :'period-name', String
-      set_time = lambda{|ob| ob.period_start = DateTime.parse(ob.period_start) }
+      set_time = lambda{|ob|  
+        if ob.period_start =~ /[0-9]*\-[0-9]*\-[0-9]*/ 
+          ob.period_start = DateTime.parse(ob.period_start)
+        end
+      }
       after_parse(&set_time)
     end
 

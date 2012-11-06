@@ -14,3 +14,7 @@
 == 0.1.2 / 2011-12-28
 
 * now uses proper min/max values from feed instead of regex matches in forecast text
+
+== 0.1.4 / 2012-11-7
+
+* fixing issue with dates in new feed format

@@ -70,7 +70,7 @@ describe Ullr do
               end
 
               it "should have a value" do
-                @text.value.should eql('A 20 percent chance of snow.  Partly sunny, with a high near 39. West wind around 9 mph. ')
+                @text.value.should eql('Mostly sunny, with a high near 57. West wind around 15 mph. ')
               end
 
               it "should respond to has_snow?" do
@@ -78,25 +78,25 @@ describe Ullr do
               end
 
               it "should return true to has_snow? if snow exists" do
-                @text.has_snow?.should be_true
+                @text.has_snow?.should be_false
               end
 
               it "should return false to has_snow? if no snow exists" do
-                @text.value = "foo"
-                @text.has_snow?.should be_false
+                @text.value = "foo snow"
+                @text.has_snow?.should be_true
               end
 
               it "should respond to snow_estimate" do
                 @text.respond_to?(:snow_estimate).should be_true
               end
 
-              it "should return [0,1] as the estimate when snow exists but no estimate given" do
-                @text.snow_estimate.should eql(['0','1'])
+              it "should return [0,0] as the estimate when snow exists but no estimate given" do
+                @text.snow_estimate.should eql(['0','0'])
               end
 
               it "should return zeros when no snow exists" do
-                @text.value = "foo"
-                @text.snow_estimate.should eql(['0','0'])
+                @text.value = "foo New snow accumulation of 0 to 1"
+                @text.snow_estimate.should eql(['0','1'])
               end
 
               it "should return the proper snow estimate when range is given" do
@@ -191,7 +191,7 @@ describe Ullr do
               end
 
               it "should have a url" do
-                @icon_link.url.should eql("http://forecast.weather.gov/images/wtf/sn20.jpg")
+                @icon_link.url.should eql("http://forecast.weather.gov/images/wtf/medium/sct.png")
               end
             end
 
@@ -224,7 +224,7 @@ describe Ullr do
               end
 
               it "should have a weather_summary" do
-                @weather_conditions.weather_summary.should eql("Slight Chc Snow")
+                @weather_conditions.weather_summary.should eql("Mostly Sunny")
               end
             end
 
@@ -332,7 +332,7 @@ describe Ullr do
                 end
 
                 it "should have a DateTime period_start" do
-                  @start_valid_time.period_start.should eql(DateTime.parse('2011-12-18T12:00:00-08:00'))
+                  @start_valid_time.period_start.should eql(DateTime.parse('2012-11-06T12:00:00-08:00'))
                 end
               end
             end
@@ -516,15 +516,15 @@ describe Ullr do
 
           it "should decoreate an object with correct min temp data" do
             @min = @temps[:minimum].first
-            @min.temperature.should eql('25')
-            @min.start_time.should eql(DateTime.parse('2011-12-18T18:00:00-08:00'))
+            @min.temperature.should eql('36')
+            @min.start_time.should eql(DateTime.parse('2012-11-06T18:00:00-08:00'))
             @min.period_name.should eql('Tonight')
           end
 
           it "should decoreate an object with correct max temp data" do
             @max = @temps[:maximum].first
-            @max.temperature.should eql('39')
-            @max.start_time.should eql(DateTime.parse('2011-12-18T12:00:00-08:00'))
+            @max.temperature.should eql('57')
+            @max.start_time.should eql(DateTime.parse('2012-11-06T12:00:00-08:00'))
             @max.period_name.should eql('This Afternoon')
           end
         end
